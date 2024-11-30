@@ -1,10 +1,11 @@
 :root {
-    --background-color: #121212; /* Pitch black */
-    --primary-color: #2a2a2a; /* Subtle gray for cards */
-    --secondary-color: #4caf50; /* Vivid green */
-    --accent-color: #fdd835; /* Bold yellow */
-    --text-color: #ffffff; /* Crisp white */
+    --background-color: #0d1117; /* Deep charcoal */
+    --primary-color: #161b22; /* Slightly lighter charcoal */
+    --secondary-color: #58a6ff; /* Bright neon blue */
+    --accent-color: #f97316; /* Vibrant orange */
+    --text-color: #c9d1d9; /* Soft white */
 }
+
 *{
     margin: 0;
     padding: 0;
@@ -78,6 +79,7 @@ form{
     border-radius: 15px;
 }
 .todo .todo-text{
+    font: inherit;
     padding: 15px;
     padding-right: 0;
     flex-grow: 1;
