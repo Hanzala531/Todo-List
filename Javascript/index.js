@@ -1,40 +1,40 @@
-const todoForm = document.querySelector('form'); 
-const todoInput = document.getElementById('todo-input');
-const todoListUl = document.getElementById('todo-list');
+const todoForm = document.querySelector("form");
+const todoInput = document.getElementById("todo-input");
+const todoListUl = document.getElementById("todo-list");
 
-let allTodos = gettodos();
-console.log(allTodos); 
-updateTodoList(); 
-
+// Get todos from local storage or initialize as empty
+let allTodos = getTodos();
+console.log(allTodos);
+updateTodoList();
 
 // Event listener for form submission
-todoForm.addEventListener('submit', function(e) {
+todoForm.addEventListener("submit", function (e) {
     e.preventDefault();
-    addTodo(); 
+    addTodo();
 });
 
 // Add a new todo
 function addTodo() {
     const todoText = todoInput.value.trim();
-    if (todoText.length > 0) { 
+    if (todoText.length > 0) {
         const todoObject = {
             text: todoText,
-            completed: false
-        }
-        
+            completed: false,
+        };
+
         allTodos.push(todoObject);
-        updateTodoList();  // Update the UI with the new todo
+        updateTodoList(); // Update the UI with the new todo
         saveTodos(); // Save the todos to local storage
-        todoInput.value = ''; // Clear input field
+        todoInput.value = ""; // Clear input field
     }
 }
 
 // Function to create and append a todo item to the list
 function createTodoItem(todo, index) {
     const todoId = `todo-${index}`;
-    const todoLi = document.createElement('li');
+    const todoLi = document.createElement("li");
     const todoValue = todo.text;
-    todoLi.className = 'todo';
+    todoLi.className = "todo";
     todoLi.innerHTML = `
         <input type="checkbox" class="checkbox" id="${todoId}" />
         <label class="custom-checkbox" for="${todoId}">
@@ -90,9 +90,9 @@ function createTodoItem(todo, index) {
                 />
             </svg>
         </button>`;
-    
+
     const checkbox = todoLi.querySelector("input");
-    checkbox.checked = todo.completed;  // Ensure the checkbox reflects the 'completed' state
+    checkbox.checked = todo.completed; // Ensure the checkbox reflects the 'completed' state
     checkbox.addEventListener("change", () => {
         allTodos[index].completed = checkbox.checked; // Update the 'completed' state
         saveTodos(); // Save the changes to local storage
@@ -105,7 +105,6 @@ function createTodoItem(todo, index) {
 
     return todoLi;
 }
-
 
 // Update the todo list UI
 function updateTodoList() {
@@ -122,13 +121,20 @@ function deleteTodo(index) {
     saveTodos(); // Save the updated todos to local storage
     updateTodoList(); // Refresh the UI
 }
+
+// Save todos to local storage
 function saveTodos() {
     const todosJson = JSON.stringify(allTodos); // Convert the array to a JSON string
-    localStorage.setItem("todos", todosJson);   // Store it with a descriptive key
+    localStorage.setItem("todos", todosJson); // Store it with a descriptive key
 }
 
-function gettodos(){
-    const todos = localStorage.getItem("todos")|| [];
-    return JSON.parse(todos);
+// Get todos from local storage
+function getTodos() {
+    const todos = localStorage.getItem("todos");
+    try {
+        return todos ? JSON.parse(todos) : []; // Parse if exists, else return empty array
+    } catch (error) {
+        console.error("Error parsing todos:", error);
+        return []; // Return empty array if parsing fails
+    }
 }
-
