@@ -6,6 +6,7 @@ const todoListUl = document.getElementById("todo-list");
 let allTodos = getTodos();
 console.log(allTodos);
 updateTodoList();
+// sdaffads
 
 // Event listener for form submission
 todoForm.addEventListener("submit", function (e) {
